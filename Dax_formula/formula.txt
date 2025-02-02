@@ -1,0 +1,30 @@
+
+
+Dax : Data Expression Analysis
+
+We have created this Dax major to build our power bI final report.
+
+
+1. Total Revenue = sum('public fact_bookings'[revenue_realized])
+
+2. Total Bookings = count('public fact_bookings'[booking_id])
+
+3. Total Succeessful Booking Rate = 
+    var x = CALCULATE([Total Bookings] , OR('public fact_bookings'[booking_status] = "Checked Out" , 'public fact_bookings'[booking_status] = "No Show"))
+    var y = [Total Bookings]
+    RETURN DIVIDE(x,y)
+
+4. Total Occupancy Rate = 
+    var x = sum('public fact_aggregated_bookings'[successful_bookings])
+    var y = sum('public fact_aggregated_bookings'[capacity])
+    RETURN DIVIDE(x,y)
+
+5. Total Cancellation Rate = 
+    var x = CALCULATE([Total Bookings] , 'public fact_bookings'[booking_status] = "Cancelled")
+    var y = [Total Bookings]
+    RETURN DIVIDE(x,y)
+
+6. Revenue Lack Cancellation = 
+    var x = sum('public fact_bookings'[revenue_generated])
+    var y = [Total Revenue]
+    RETURN (x-y)
