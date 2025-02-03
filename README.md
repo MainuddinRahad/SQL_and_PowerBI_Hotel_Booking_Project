@@ -296,6 +296,7 @@ GROUP BY city , hotel_name
 
 - **Atliq City (₹88.00M)** and **Atliq Palace (₹101.51M)** also perform well.
 
+![alt text](asstes/q_6.PNG)
 ![alt text](asstes/qc_6.PNG)
 
 
