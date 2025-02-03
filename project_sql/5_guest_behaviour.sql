@@ -4,7 +4,7 @@
 
 
 -- Guest Behavior:
-	Which room category  is the most preferred by guests in different hotel categories?
+	Which room category is the most preferred by guests in different hotel categories?
 
 
 */

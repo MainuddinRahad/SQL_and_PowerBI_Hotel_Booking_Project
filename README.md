@@ -206,4 +206,96 @@ For better visulization:
 ![alt text](asstes/qc_4.PNG)
 
 
-- ## Project on going....
+## 4. Guest Behavior :
+
+- ✅ Which room category is the most preferred by guests in different hotel categories?
+
+```sql
+SELECT
+    dim_hotels.category AS hotel_category,
+    dim_rooms.room_class AS room_category,
+    count(booking_id) AS number_of_bookings
+FROM
+    fact_bookings
+    LEFT JOIN dim_hotels
+    ON fact_bookings.property_id = dim_hotels.property_id
+    LEFT JOIN dim_rooms
+    ON fact_bookings.room_id = dim_rooms.room_id
+GROUP BY hotel_category , room_category
+ORDER BY hotel_category ASC;
+```
+
+### 🔑 Key Insights from Room Category Performance
+- ### 🏨 Business Hotels
+
+- ✅ Most Popular Room Type: **Elite Rooms (18,932 bookings)**
+
+- ✅ **Standard Rooms (14,480 bookings)** → Second most booked rooms.
+
+- ✅ **Presidential Rooms (6,991 bookings)** → Least booked, likely due to higher pricing and niche customer base.
+
+
+- ### 🏨 Luxury Hotels
+
+- ✅ Most Popular Room Type: **Elite Rooms (30,573 bookings)** 
+
+- ✅ **Standard Rooms (23,966 bookings)** → Also in high demand.
+
+- ✅ **Presidential Rooms (9,082 bookings)** → Least booked, consistent with business hotels, showing limited affordability and selective clientele.
+
+Finally we can see that **luxury hotels and Business hotels** both , **Elite and Standard rooms** attract the most bookings.
+
+**Presidential rooms** have the lowest demand in both hotel categories, likely due to high prices and limited affordability probably.
+
+![alt txt](asstes/q_5.PNG)
+
+![alt txt](asstes/qc_5.PNG)
+
+## 6. City-Wise Hotel Performance:
+
+- ✅Which city has the highest revenue for hotels?
+
+```sql
+SELECT
+    dim_hotels.city AS city,
+    dim_hotels.property_name AS hotel_name,
+    CAST(
+        ((sum(fact_bookings.revenue_realized) :: DECIMAL) / 1000000)
+        AS DECIMAL(10,2)
+     )AS revenue_in_millions
+FROM
+    fact_bookings
+    LEFT JOIN dim_hotels
+    ON fact_bookings.property_id = dim_hotels.property_id
+GROUP BY city , hotel_name
+```
+
+### Here's the breakdown of my query analysis.
+
+- ### Bangalore:
+
+- 📈 **Atliq Bay (₹82.44M) and Atliq City (₹81.88M)** are the highest revenue-generating hotels.
+
+- **Atliq Grands (₹54.49M)** has the lowest revenue in Bangalore.
+
+- ### Delhi:
+
+- 💰 **Atliq Palace (₹89.14M)** leads in revenue, significantly ahead of others.
+
+- Atliq Grands (₹36.06M) earns the least in Delhi, showing lower demand.
+
+- ### Hyderabad:
+
+- 🔝 **Atliq Bay (₹69.26M)** generates the highest revenue.
+
+- **Atliq Palace (₹44.84M)** has the lowest revenue.
+
+- ### Mumbai:
+
+- 🚀 **Atliq Exotica (₹212.44M)** dominates with the highest revenue across all cities.
+
+- **Atliq City (₹88.00M)** and **Atliq Palace (₹101.51M)** also perform well.
+
+![alt text](asstes/qc_6.PNG)
+
+
