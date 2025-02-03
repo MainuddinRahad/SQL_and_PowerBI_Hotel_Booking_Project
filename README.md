@@ -2,6 +2,8 @@
 
 # Hotel Booking Analytics Dashboard
 
+![alt txt](asstes/theme.png)
+
 # 📌 Project Overview
 
 This project aims to analyze hotel booking data to derive valuable business insights using **SQL and Power BI.** The dataset consists of multiple tables containing hotel information, booking trends, customer ratings, and revenue data. The analysis focuses on **occupancy rates, revenue trends, customer behavior, and booking platform performance.**
@@ -300,3 +302,125 @@ GROUP BY city , hotel_name
 ![alt text](asstes/qc_6.PNG)
 
 
+## 7. Revenue Leakage Due to Cancellations:
+
+✅ How much revenue is lost due to cancellations?
+
+```sql
+SELECT
+    CAST(
+        (((sum(revenue_generated) - sum(revenue_realized)) :: DECIMAl) / 1000000 ) AS DECIMAL(10,2)
+    )AS revenue_lack_in_millions
+FROM
+    fact_bookings
+```
+- **During cancellation we have $298.77M revenue lost.**
+
+![alt txt](asstes\qc_7.PNG)
+
+## 8. Customer Ratings Analysis:
+
+- ✅Which factors impact customer ratings, and how do ratings vary across hotels and cities?
+
+```sql
+SELECT
+    city,
+    CAST((sum(revenue_realized):: DECIMAL / 1000000) AS DECIMAL(10,2)) AS total_revenue_in_millions,
+    CAST(avg(ratings_given) AS DECIMAl(10,2)) AS average_rating
+FROM
+    fact_bookings
+    LEFT JOIN dim_hotels
+    ON fact_bookings.property_id = dim_hotels.property_id
+GROUP BY city ;
+```
+### Insights from the Chart: "Impact of Revenue on Customer Ratings Across Hotels & Cities"
+
+- ### Mumbai Generates the Highest Revenue:
+
+    - The **purple bubble (Mumbai**) is positioned at the highest revenue level **($668.64M)**, indicating that Mumbai hotels generate the most revenue despite an average customer rating of around **3.65.**
+
+    - This suggests that revenue does not necessarily correlate with the highest ratings.
+
+
+- ### Bangalore has Strong Revenue but Lower Ratings:
+
+    - The **blue bubble (Bangalore)** has the second-highest revenue ($420.40M) but the lowest customer rating **(3.41).**
+
+    - This indicates a potential issue with customer satisfaction despite strong revenue generation.
+
+
+- ### Delhi Achieves the Highest Customer Rating:
+
+    - The **blue bubble (Delhi)** is positioned at the highest rating **(3.78)** while having a moderate **revenue ($294.50M).**
+
+    - This suggests that customers in **Delhi** are more satisfied with hotel services, even if revenue isn’t the highest.
+        
+
+- ### Hyderabad Balances Revenue and Ratings:
+
+    - **The orange bubble (Hyderabad)** has moderate **revenue ($325.23M)** and a decent **rating (3.66).**
+
+
+- **This suggests a balance between revenue generation and customer satisfaction, possibly indicating efficient service management.**
+
+![alt txt](asstes/q_8.PNG)
+
+![alt txt](asstes/qc_8.PNG)
+
+# 📊 Power BI Dashboard Features & Visuals
+
+## 📌 Key KPIs 
+
+**✔ Total Bookings**
+
+**✔ Total Revenue**
+
+**✔ Total Occupancy Rate (%)**
+
+**✔ Total Cancellation Rate (%)**
+
+**✔ Total Successful Booking Rate (%)**
+
+**✔ Revenue Lack During Cancellation**
+
+## 📌 Power BI Visuals
+
+**✅ Revenue Trend Analysis → Line Chart (Total Revenue over Weeknum and Day_tpe -> (Weekday vs Weekend) )**
+
+**✅ Booking Trends Analysis → Line Chart (Total Bookings over Weeknum and Day_tpe -> (Weekday vs Weekend) )**
+
+**✅ Booking Trends By Booking Status → Donut Chart (Successful vs No Show vs Cancalled)**
+
+**✅ Revenue By Hotel Category  →  Stacked Column Chart (Luxury vs Business)**
+
+**✅ Customer Ratings Analysis → Scatter Plot (Ratings vs. Revenue vs. City)**
+
+**✅ Most Popular Room Categories → Clustered Column Chart ( Luxury vs Business)**
+
+**✅ Revenue Loss During Cancelation  →  Pie Chart**
+
+## Here's The Final Dashboard 
+
+### Page - 1
+
+![alt txt](powerbi_report/final_report_page_1.PNG)
+
+### Page - 2
+
+![alt txt](powerbi_report/final_report_page_2.PNG)
+
+# 📝 Summary
+
+**📌 Industry: Hospitality (Hotel Revenue Management)**
+
+**📌 Key Focus: Revenue, Occupancy, Booking Trends, Customer Ratings**
+
+**📌 Tools Used: SQL, Power BI , Excel**
+
+**📌 Deliverable: Interactive Power BI Dashboard + SQL Insights**
+
+
+
+# 🎯 Final Thoughts
+
+This project demonstrates data-driven decision-making in hotel revenue management using SQL and Power BI. By identifying booking trends, revenue leakage, and customer preferences, AtliQ Grands can improve its market position and boost revenue performance.
