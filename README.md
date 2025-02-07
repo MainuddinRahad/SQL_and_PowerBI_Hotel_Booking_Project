@@ -316,7 +316,7 @@ FROM
 ```
 - **During cancellation we have $298.77M revenue lost.**
 
-![alt txt](asstes\qc_7.PNG)
+![alt txt](asstes/qc_7.PNG)
 
 ## 8. Customer Ratings Analysis:
 
